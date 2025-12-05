@@ -29,12 +29,10 @@ class MaskCreator:
 
         if event == cv2.EVENT_LBUTTONDOWN:
             self.draw = True
-            # cv2.circle(self.mask, (x, y), self.brush_size, (255, 255, 255), -1)
             cv2.circle(self.mask, (x, y), self.brush_size, 255, -1)
             cv2.circle(self.target, (x, y), self.brush_size, (255, 255, 255), -1)
         elif event == cv2.EVENT_MOUSEMOVE:
             if self.draw:
-                # cv2.circle(self.mask, (x, y), self.brush_size, (255, 255, 255), -1)
                 cv2.circle(self.mask, (x, y), self.brush_size, 255, -1)
                 cv2.circle(self.target, (x, y), self.brush_size, (255, 255, 255), -1)
         elif event == cv2.EVENT_LBUTTONUP: self.draw = False
@@ -114,8 +112,6 @@ class MaskMover:
         cv2.setMouseCallback(self.window_name, self._move_mask)
 
         while True:
-            # self.mask = np.roll(self._mask, shift=(self.offset_width, self.offset_height), axis=(0, 1))
-            # display = np.where(self.mask > 0, self.mask, self.image)
             display = self.image.copy()
             
             x1 = max(self.offset_width, 0)

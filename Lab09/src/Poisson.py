@@ -19,13 +19,13 @@ class Poisson:
         self.target = cv2.resize(cv2.imread(target_path), true_size)
         self.mask = cv2.resize(cv2.imread(mask_path), true_size)
 
-        offset_height, offset_width = offset
+        offset_width, offset_height = offset
         height, width = self.target.shape[:2]
 
         center_x = int(offset_height + (width // 2))
         center_y = int(offset_width + (height // 2))
         
-        self.offset = (center_y, center_x)
+        self.offset = (center_x, center_y)
         print(offset)
         print(self.offset)
 
