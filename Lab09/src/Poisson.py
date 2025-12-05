@@ -11,7 +11,9 @@ class Poisson:
         self.mask_path = mask_path
 
         self.image = cv2.imread(image_path)
-        self.offset = (self.image.shape[1] // 2, self.image.shape[0] // 2) #offset
+        # self.offset = ((self.image.shape[1] + offset[1]) // 2, (self.image.shape[0] + offset[0]) // 2) #offset
+        # self.offset = ((self.image.shape[1]) // 2, (self.image.shape[0]) // 2)
+        self.offset = offset
 
         max_size = np.array(target_size)
         image_size = self.image.shape[:2][::-1]
@@ -19,12 +21,15 @@ class Poisson:
 
         self.target = cv2.resize(cv2.imread(target_path), true_size)
         self.mask = cv2.resize(cv2.imread(mask_path), true_size)
-
-        # plt.subplot(131)
-        # plt.imshow(self.image)
-        # plt.subplot(132)
+        # plt.subplot(221)
         # plt.imshow(self.target)
-        # plt.subplot(133)
+        # plt.subplot(222)
+        # plt.imshow(self.mask)
+        # self.target = np.roll(self.target, shift=offset, axis=(0, 1))
+        # self.mask = np.roll(self.mask, shift=offset, axis=(0, 1))
+        # plt.subplot(223)
+        # plt.imshow(self.target)
+        # plt.subplot(224)
         # plt.imshow(self.mask)
         # plt.show()
 
