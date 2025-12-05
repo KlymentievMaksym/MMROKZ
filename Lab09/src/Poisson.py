@@ -2,6 +2,7 @@ import os
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+from .SeamlessClone import PoissonEditor
 
 
 class Poisson:
@@ -17,7 +18,7 @@ class Poisson:
         true_size = np.where(image_size < max_size, image_size, max_size).astype(int)
 
         self.target = cv2.resize(cv2.imread(target_path), true_size)
-        self.mask = cv2.resize(cv2.imread(mask_path), true_size)
+        self.mask = cv2.resize(cv2.imread(mask_path, 0), true_size)
 
         offset_width, offset_height = offset
         height, width = self.target.shape[:2]
@@ -30,7 +31,8 @@ class Poisson:
         print(self.offset)
 
     def run(self):
-        poisson_image = cv2.seamlessClone(self.target, self.image, self.mask, self.offset, cv2.NORMAL_CLONE)
+        poisson_image = PoissonEditor(self.target, self.image, self.mask).blend()
+        # poisson_image = cv2.seamlessClone(self.target, self.image, self.mask, self.offset, cv2.NORMAL_CLONE)
         poisson_image_path = os.path.join(os.path.dirname(self.image_path), "poisson.png")
         cv2.imwrite(poisson_image_path, poisson_image)
         return poisson_image_path
