@@ -5,9 +5,147 @@ import matplotlib.pyplot as plt
 import time
 import cv2
 
-def poisson_seidel(target, source, mask, n_iter=1000):
+def poisson_seidel(target, source, mask, iterations):
+
+    # # MyImage = imread('In4.jpg');
+    # # [nx, ny, c] = size(MyImage)
+    # height, width, channels = target.shape
+    # # MyImage = rgb2gray(MyImage);
+    # # MyImage = double(MyImage);
+    # # Min = min(min(MyImage));
+    # # Max = max(max(MyImage));
+    # # f = (MyImage - Min)/(Max-Min);
+    # f = cv2.cvtColor(target, cv2.COLOR_RGB2GRAY) / 255
+
+    # # nx = nx - 2; ny = ny - 2;
+    # # lam = 0.05;
+    # height_operate = height - 2
+    # width_operate = width - 2
+    # lam = 0.05
+
+    # # Ax = ones(nx+2,ny+2);  Cx = Ax;
+    # # Ay = ones(nx+2,ny+2);  Cy = Ay;
+    # # B  = 4*ones(nx+2,ny+2) + lam;
+    # Ax = np.ones((height, width))
+    # Cx = Ax.copy()
+    # Ay = np.ones((height, width))
+    # Cy = Ay.copy()
+    # B = 4 * np.ones((height, width)) + lam
+
+    # # D  = zeros(nx+2,ny+2);
+    # # for i=2:nx+1
+    # #     for j=2:ny+1
+    # #         D(i,j) = ((f(i-1,j)-2*f(i,j)+f(i+1,j))+...
+    # #                 (f(i,j-1)-2*f(i,j)+f(i,j+1)));
+    # #     end
+    # # end
+    # # u = zeros(nx+2,ny+2);
+    # D = np.zeros((height, width))
+    # for i in range(1, height_operate + 1):
+    #     for j in range(1, width_operate + 1):
+    #         D[i, j] = (f[i - 1, j] - 2 * f[i, j] + f[i + 1, j]) + (f[i, j - 1] - 2 * f[i, j] + f[i, j + 1])
+
+    # u = np.zeros((height, width))
+
+    # # for j=2:ny+1
+    # #     B(2,j) = B(2,j) - Ax(2,j);
+    # #     Ax(2,j) =  0;
+    # #     B(nx+1,j) = B(nx+1,j) - Cx(nx+1,j);
+    # #     Cx(nx+1,j) = 0;
+    # # end
+    # for j in range(1, width_operate + 1):
+    #     B[1, j] = B[1, j] - Ax[1, j]
+    #     Ax[1, j] = 0
+    #     B[height_operate+1, j] = B[height_operate+1, j] - Cx[height_operate+1, j]
+    #     Cx[height_operate+1, j] = 0
+
+    # # for i=2:nx+1
+    # #     B(i,2) = B(i,2) - Ay(i,2);
+    # #     Ay(i,2) = 0;
+    # #     B(i,ny+1) = B(i,ny+1) - Cy(i,ny+1);
+    # #     Cy(i,ny+1) = 0;
+    # # end
+    # for i in range(1, height_operate + 1):
+    #     B[i, 1] = B[i, 1] - Ay[i, 1]
+    #     Ay[i, 1] = 0
+    #     B[i, width_operate+1] = B[i, width_operate+1] - Cy[i, width_operate+1]
+    #     Cy[i, width_operate+1] = 0
+
+    # # u = SimpleSeidel(u);
+    # # err = 1;
+    # # eps = 1e-6;
+    # # iter = 0;
+    # # while err > eps
+    # #     iter = iter + 1;
+    # #     if mod(iter,100) == 0
+    # #         fprintf('iter = %5d; err = %4.3e\n', iter, err);
+    # #     end
+    # #     err = 0;
+    # #     for i=2:nx+1
+    # #         for j=2:ny+1
+    # #             t = (Ax(i,j)*U(i-1,j) + Cx(i,j)*U(i+1,j) + ...
+    # #                 Ay(i,j)*U(i,j-1) + Cy(i,j)*U(i,j+1) - D(i,j))/B(i,j);
+    # #             div = abs(t-U(i,j));
+    # #             if err < div
+    # #                 err = div;
+    # #             end
+    # #             U(i,j) = t;
+    # err = 1
+    # eps = 1e-6
+    # iter = 0
+    # while err > eps:
+    #     iter = iter + 1
+    #     if iter % 100 == 0:
+    #         print('iter = %5d; err = %4.3e' % (iter, err))
+    #     err = 0
+    #     for i in range(1, height_operate + 1):
+    #         for j in range(1, width_operate + 1):
+    #             t = (Ax[i, j] * u[i - 1, j] + Cx[i, j] * u[i + 1, j] + Ay[i, j] * u[i, j - 1] + Cy[i, j] * u[i, j + 1] - D[i, j]) / B[i, j]
+    #             div = abs(t - u[i, j])
+    #             if err < div:
+    #                 err = div
+    #             u[i, j] = t
+
+    # # for j=2:ny+1
+    # #     u(1,j) = u(2,j);
+    # #     u(nx+2,j) = u(nx+1,j);
+    # # end
+    # for j in range(1, width_operate + 1):
+    #     u[0, j] = u[1, j]
+    #     u[height_operate+1, j] = u[height_operate, j]
+
+    # # for i=2:nx+1
+    # #     u(i,1) = u(i,2);
+    # #     u(i,ny+2) = u(i,ny+1);
+    # # end
+    # for i in range(1, height_operate + 1):
+    #     u[i, 0] = u[i, 1]
+    #     u[i, width_operate+1] = u[i, width_operate]
+
+    # # u(1,1) = 0.5*(u(1,2)+u(2,1));
+    # # u(nx+2,1) = 0.5*(u(nx+1,1)+u(nx+2,2));
+    # # u(nx+2,ny+2) = 0.5*(u(nx+2,ny+1)+u(nx+1,ny+2));
+    # # u(1,ny+2) = 0.5*(u(1,ny+1)+u(2,ny+2));
+    # u[0, 0] = 0.5 * (u[0, 1] + u[1, 0])
+    # u[height_operate+1, 0] = 0.5 * (u[height_operate, 0] + u[height_operate+1, 1])
+    # u[height_operate+1, width_operate+1] = 0.5 * (u[height_operate+1, width_operate] + u[height_operate, width_operate+1])
+    # u[0, width_operate+1] = 0.5 * (u[0, width_operate] + u[1, width_operate+1])
+
+    # # Min = min(min(u));
+    # # Max = max(max(u));
+    # # u = (u - Min)/(Max-Min);
+    # # subplot(1,2,1);imshow(f);
+    # # subplot(1,2,2);imshow(u);
+    # mmax = np.max(u)
+    # mmin = np.min(u)
+    # u = (u - mmin) / (mmax - mmin)
+    # plt.subplot(1, 2, 1), plt.imshow(f, cmap='gray')
+    # plt.subplot(1, 2, 2), plt.imshow(u, cmap='gray')
+    # plt.show()
+
     h, w, c = target.shape
     m = mask.astype(float) / 255.0
+    m = m[:, :, None]
     
     # Обчислення Лапласіана джерела (Source Laplacian)
     # Ядро Лапласа: [[0, -1, 0], [-1, 4, -1], [0, -1, 0]]
@@ -21,7 +159,7 @@ def poisson_seidel(target, source, mask, n_iter=1000):
     
     # Ітерації
     # Для прискорення використовуємо зсуви масивів замість циклів по пікселях
-    for k in range(n_iter):
+    for k in range(iterations):
         # f_new = (f_up + f_down + f_left + f_right - laplacian_source) / 4
         # Це оновлення Якобі (паралельне), але для демонстрації збіжності підійде
         
@@ -119,15 +257,19 @@ if __name__ == "__main__":
     source = cv2.imread("./Lab09/images/ball.jpg")
     mask = cv2.imread("./Lab09/images/corrupted_mask.png")  #, 0
 
-    source = cv2.resize(source, (200, 200))
+    source = cv2.resize(source, (100, 100))
 
     size = source.shape[:2][::-1]
     target = cv2.resize(target, size)
     mask = cv2.resize(mask, size)
 
+    target = cv2.cvtColor(target, cv2.COLOR_BGR2RGB)
+    source = cv2.cvtColor(source, cv2.COLOR_BGR2RGB)
+    mask = cv2.cvtColor(mask, cv2.COLOR_BGR2GRAY)
+
     start = time.time()
-    n_iters = 500
-    res_seidel = poisson_seidel(target, source, mask, n_iter=n_iters)
+    iterations = 500
+    res_seidel = poisson_seidel(target, source, mask, iterations=iterations)
     end = time.time()
     t_seidel = end - start
     
@@ -156,9 +298,9 @@ if __name__ == "__main__":
     # Показуємо приклад роботи (для останнього розміру)
     
     plt.figure(figsize=(8, 8))
-    plt.subplot(221), plt.imshow(cv2.cvtColor(target.astype('uint8'), cv2.COLOR_BGR2RGB)), plt.title("Target")
-    plt.subplot(222), plt.imshow(cv2.cvtColor(source.astype('uint8'), cv2.COLOR_BGR2RGB)), plt.title("Source")
-    plt.subplot(223), plt.imshow(cv2.cvtColor(res_seidel, cv2.COLOR_BGR2RGB)), plt.title("Result (Seidel)")
+    plt.subplot(221), plt.imshow(target.astype('uint8')), plt.title("Target")
+    plt.subplot(222), plt.imshow(source.astype('uint8')), plt.title("Source")
+    plt.subplot(223), plt.imshow(res_seidel), plt.title("Result (Seidel)")
     plt.subplot(224), plt.imshow(cv2.cvtColor(res_scipy, cv2.COLOR_BGR2RGB)), plt.title("Result (SciPy)")
     plt.show()
     # plt.savefig('poisson_result_example.png')

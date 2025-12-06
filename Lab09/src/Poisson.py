@@ -2,8 +2,6 @@ import os
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-from .SeamlessClone import PoissonEditor
-
 
 class Poisson:
     def __init__(self, image_path, target_path, mask_path, offset, target_size: tuple = (float("inf"), float("inf"))):
@@ -31,8 +29,7 @@ class Poisson:
         print(self.offset)
 
     def run(self):
-        poisson_image = PoissonEditor(self.target, self.image, self.mask).blend()
-        # poisson_image = cv2.seamlessClone(self.target, self.image, self.mask, self.offset, cv2.NORMAL_CLONE)
+        poisson_image = cv2.seamlessClone(self.target, self.image, self.mask, self.offset, cv2.NORMAL_CLONE)
         poisson_image_path = os.path.join(os.path.dirname(self.image_path), "poisson.png")
         cv2.imwrite(poisson_image_path, poisson_image)
         return poisson_image_path

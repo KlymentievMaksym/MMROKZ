@@ -20,6 +20,6 @@ def main(image_path: str, target_path: str, mask_path: str = None, offset: tuple
 
 if __name__ == "__main__":
     # main("./Lab09/images/Towers.jpg", "./Lab09/images/Airplane.jpg", target_size=(350, 250))
-    # main("./Lab09/images/water.jpg", "./Lab09/images/ball.jpg")
+    main("./Lab09/images/water.jpg", "./Lab09/images/ball.jpg")
     # main("./Lab09/images/Towers.jpg", "./Lab09/images/Airplane.jpg", mask_path="./Lab09/images/mask.png", target_size=(350, 250))
-    main("./Lab09/images/water.jpg", "./Lab09/images/ball.jpg", mask_path="./Lab09/images/mask.png")
+    # main("./Lab09/images/water.jpg", "./Lab09/images/ball.jpg", mask_path="./Lab09/images/mask.png")
