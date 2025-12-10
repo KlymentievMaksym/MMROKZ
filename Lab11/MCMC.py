@@ -159,13 +159,13 @@ class TextMarkovChain:
         return raw.decode(enc, errors='ignore')
 
     def _clean(self, text):
-       return ''.join(ch for ch in text.lower() if ch in self.alphabet)
+        return ''.join(ch for ch in text.lower() if ch in self.alphabet)
 
     def _get_bigrams(self, text):
         return [text[i:i+2] for i in range(len(text)-1)]
 
     def _create_alphabet(self):
-        alphabet = list(set(self.text_to_learn))
+        alphabet = list(set(self.text))
         alphabet.remove(" ")
         return alphabet
 
@@ -190,11 +190,11 @@ class TextMarkovChain:
             char_second = cleaned_score[i+1].lower()
             if char_first in self.alphabet and char_second in self.alphabet:
                 score += self.M[self.char_to_idx[char_first], self.char_to_idx[char_second]]
- 
+
         return score
 
 
 if __name__ == '__main__':
     # res = mcmc_text("./Data/TheWarOfTheWorlds.txt", "./Data/TheTimeMachine.txt", iterations=1500, report_every=100)
-    res = TextMarkovChain("./Data/TheWarOfTheWorlds.txt").score("./Data/Deciphered.txt")
+    res = TextMarkovChain("./Lab11/Data/TheWarOfTheWorlds.txt").score("./Lab11/Data/TheTimeMachine.txt")
     print(f"Score: {res:.2f}")
