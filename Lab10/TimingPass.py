@@ -6,7 +6,7 @@ import sys
 import os
 
 class TimingPass:
-    def __init__(self, target_phrase="mama"):
+    def __init__(self, target_phrase="dlagnytor"):
         self.target_phrase = target_phrase
         self.timings = []
         self.last_press = 0
